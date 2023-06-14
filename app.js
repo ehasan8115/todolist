@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 const _ = require("lodash");
 const app = express();
 
+const port = process.env.PORT || 3000;
+
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -135,6 +137,7 @@ app.get("/about", function(req, res){
   res.render("about");
 });
 
-app.listen(3000, function() {
-  console.log("Server started on port 3000");
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
