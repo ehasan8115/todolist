@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // mongoose.connect("mongodb://localhost:27017/todolistDB", {useNewUrlParser: true});
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING || 'mongodb://127.0.0.1:27017/todolistDB', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -43,6 +43,17 @@ const listSchema = {
 };
 
 const List = mongoose.model("List", listSchema);
+
+
+app.get('/api/data', (req, res) => {
+  // Handle API request
+  res.json({ message: 'This is an example API response.' });
+});
+
+// Catch-all route to serve the 'index.html' file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 
 app.get("/", function(req, res) {
